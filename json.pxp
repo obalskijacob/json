@@ -1,0 +1,17 @@
+<?php
+        header('Access-Control-Allow-Origin: *');
+        include "polacz.php";
+        if ($sql = $baza->prepare( "SELECT * FROM dane"))
+        {
+                $sql->execute();
+                $sql->bind_result($id,$imie);
+                while ($sql->fetch())
+                  $dane[] = array(
+                     "id" => $id,
+                     "imie" => $imie
+                   );
+                $sql->close();
+        }
+        $baza->close();
+        echo json_encode($dane, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+?>
